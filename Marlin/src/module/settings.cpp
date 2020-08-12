@@ -363,7 +363,7 @@ typedef struct SettingsDataStruct {
   //
   // HAS_MOTOR_CURRENT_PWM
   //
-  #if HAS_DIGIPOTSS
+  #if HAS_MOTOR_CURRENT_SPI
     uint32_t motor_current_setting[COUNT(stepper.motor_current_setting)];
   #else
     uint32_t motor_current_setting[3];                  // M907 X Z E
@@ -1273,7 +1273,7 @@ void MarlinSettings::postprocess() {
     {
       _FIELD_TEST(motor_current_setting);
 
-      #if HAS_MOTOR_CURRENT_PWM || HAS_DIGIPOTSS
+      #if HAS_MOTOR_CURRENT_PWM || HAS_MOTOR_CURRENT_SPI
         EEPROM_WRITE(stepper.motor_current_setting);
       #else
         const uint32_t no_current[3] = { 0 };
@@ -2105,7 +2105,7 @@ void MarlinSettings::postprocess() {
       //
       {
         _FIELD_TEST(motor_current_setting);
-        #if HAS_DIGIPOTSS
+        #if HAS_MOTOR_CURRENT_SPI
           uint32_t motor_current_setting[] = DIGIPOT_MOTOR_CURRENT;
         #else
           uint32_t motor_current_setting[3];
@@ -2113,7 +2113,7 @@ void MarlinSettings::postprocess() {
         DEBUG_ECHOLNPGM("DIGIPOTS Loading");
         EEPROM_READ(motor_current_setting);
         DEBUG_ECHOLNPGM("DIGIPOTS Loaded");
-        #if HAS_MOTOR_CURRENT_PWM || HAS_DIGIPOTSS
+        #if HAS_MOTOR_CURRENT_PWM || HAS_MOTOR_CURRENT_SPI
           if (!validating)
             COPY(stepper.motor_current_setting, motor_current_setting);
         #endif
@@ -2793,17 +2793,17 @@ void MarlinSettings::reset() {
   #if HAS_MOTOR_CURRENT_PWM
     constexpr uint32_t tmp_motor_current_setting[3] = PWM_MOTOR_CURRENT;
     LOOP_L_N(q, 3)
-      stepper.digipot_current(q, (stepper.motor_current_setting[q] = tmp_motor_current_setting[q]));
+      stepper.set_digipot_current(q, (stepper.motor_current_setting[q] = tmp_motor_current_setting[q]));
   #endif
 
   //
   // DIGIPOTS
   //
-  #if HAS_DIGIPOTSS
+  #if HAS_MOTOR_CURRENT_SPI
     static constexpr uint32_t tmp_motor_current_setting[] = DIGIPOT_MOTOR_CURRENT;
     DEBUG_ECHOLNPGM("Writing Digipot");
     LOOP_L_N(q, COUNT(tmp_motor_current_setting))
-      stepper.digipot_current(q, tmp_motor_current_setting[q]);
+      stepper.set_digipot_current(q, tmp_motor_current_setting[q]);
     DEBUG_ECHOLNPGM("Digipot Written");
   #endif
 
@@ -3706,7 +3706,7 @@ void MarlinSettings::reset() {
       #endif
     #endif
 
-    #if HAS_MOTOR_CURRENT_PWM || HAS_DIGIPOTSS
+    #if HAS_MOTOR_CURRENT_PWM || HAS_MOTOR_CURRENT_SPI
       CONFIG_ECHO_HEADING("Stepper motor currents:");
       CONFIG_ECHO_START();
       #if HAS_MOTOR_CURRENT_PWM
@@ -3715,7 +3715,7 @@ void MarlinSettings::reset() {
           , SP_Z_STR, stepper.motor_current_setting[1]
           , SP_E_STR, stepper.motor_current_setting[2]
         );
-      #elif HAS_DIGIPOTSS
+      #elif HAS_MOTOR_CURRENT_SPI
         SERIAL_ECHOPGM("  M907");
         LOOP_L_N(q, COUNT(stepper.motor_current_setting)) {
           SERIAL_CHAR(' ');
