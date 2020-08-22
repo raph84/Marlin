@@ -12,7 +12,7 @@
 //#define MachineCR20Pro
 //#define MachineCR10S
 //#define MachineCR10SV2
-//#define MachineCR10SPro // Graphics LCD Requires soldering R64 and R66
+#define MachineCR10SPro // Graphics LCD Requires soldering R64 and R66
 //#define MachineCR10SProV2 // Second Gen 10S Pro with BLTouch wired to Z Max
 //#define MachineCRX
 //#define MachineCRXPro
@@ -45,7 +45,7 @@
    Creality Mounting assumes bolt-on kit
 */
 //#define HotendStock
-//#define HotendE3D
+#define HotendE3D
 //#define HotendMosquito
 
 //Enable this if you have an all metal hotend capable of 300c
@@ -74,7 +74,7 @@
    ac bed, leave both disabled
 */
 //#define BedAC
-//#define BedDC
+#define BedDC
 
 //#define SolidBedMounts //Removed a few LCD options to save some memory since not needed with solid mounts
 
@@ -83,13 +83,13 @@
    Leave all disabled if no sensor is available
 */
 //#define ABL_EZABL // TH3D EZABL or Any NO Sensor
-//#define ABL_NCSW //Creality ABL or Any NC Sensor
+#define ABL_NCSW //Creality ABL or Any NC Sensor
 //#define ABL_BLTOUCH
 //#define ABL_TOUCH_MI // Uncomment ABL_TOUCH_MI to use Touch-MI sensor by hotends.fr
 
-//#define CREALITY_ABL_MOUNT //Using creality ABL mount
+#define CREALITY_ABL_MOUNT //Using creality ABL mount
 //#define E3D_DUALFAN_MOUNT // Using HD Modular mount as above with 2 5015 blowers and sensor on the right
-//#define E3D_PROBEMOUNT_LEFT // Default is probe mounted to the right for E3D. Set this to invert.
+//define E3D_PROBEMOUNT_LEFT // Default is probe mounted to the right for E3D. Set this to invert.
 
 
 /**
@@ -102,7 +102,7 @@
 
 // Touchscreen options - only 32 bit boards have the open serial ports to use with graphics displays above
 //#define ForceCRXDisplay
-//#define Force10SProDisplay
+#define Force10SProDisplay
 
 //#define AddonFilSensor //Adds a filament runout sensor to the CR20 or Ender 4
 //#define lerdgeFilSensor //Using lerdge filament sensor, which is opposite polarity to stock
@@ -181,7 +181,7 @@
 */
 //#define MeshFast
 //#define MeshStd
-//#define MeshFine
+#define MeshFine
 //#define MeshExtreme
 
 /*
@@ -825,7 +825,7 @@
 #elif ENABLED(HotendMosquito)
   #define TEMP_SENSOR_0 67
 #elif ENABLED(HotendE3D)
-  #define TEMP_SENSOR_0 5
+#define TEMP_SENSOR_0 5
 #elif ANY(HotendStock, CrealityThermistor)
   #define TEMP_SENSOR_0 1
 #endif
@@ -894,7 +894,7 @@
 #if ENABLED(HotendMosquito)
   #define HEATER_0_MAXTEMP 450
 #elif ENABLED(HotendAllMetal)
-	#define HEATER_0_MAXTEMP 315
+	#define HEATER_0_MAXTEMP 300
 #else
 	#define HEATER_0_MAXTEMP 255
 #endif
@@ -1636,7 +1636,7 @@
       #define NOZZLE_TO_PROBE_OFFSET { 63, 5, 0 }
     #endif
   #else
-    #define NOZZLE_TO_PROBE_OFFSET { 32, 5, 0 }
+    #define NOZZLE_TO_PROBE_OFFSET { -20, 0, 0.2 }
   #endif
 #endif
 
@@ -1819,7 +1819,7 @@
 #elif ENABLED(TOUCH_MI_PROBE)
   #define Z_HOMING_HEIGHT 10
 #else
-  #define Z_HOMING_HEIGHT 4  // (in mm) Minimal z height before homing (G28) for Z clearance above the bed, clamps, ...
+  #define Z_HOMING_HEIGHT 6  // (in mm) Minimal z height before homing (G28) for Z clearance above the bed, clamps, ...
 #endif
 
 //#define Z_AFTER_HOMING  10      // (mm) Height to move to after homing Z
@@ -1903,11 +1903,11 @@
     #define ClipClearance 5
   #elif ENABLED(MachineCR10SPro)
     #define X_BED_SIZE 300
-    #define Y_BED_SIZE 300
+    #define Y_BED_SIZE 310
     #define Z_MAX_POS 400
-    #define X_MAX_POS 315
-    #define Y_MAX_POS 310
-    #define ClipClearance 10
+    #define X_MAX_POS 300
+    #define Y_MAX_POS 320
+    #define ClipClearance 15
   #elif ENABLED(MachineCR10Std)
     #define X_BED_SIZE 300
     #define Y_BED_SIZE 300
@@ -1958,8 +1958,8 @@
   #define X_MIN_POS -4
   #define Y_MIN_POS -10
 #else
-  #define X_MIN_POS 0
-  #define Y_MIN_POS 0
+  #define X_MIN_POS -15
+  #define Y_MIN_POS -10
 #endif
 #define Z_MIN_POS 0
 #ifndef X_MAX_POS
@@ -2245,7 +2245,7 @@
 #if ENABLED(LEVEL_BED_CORNERS)
   #define LEVEL_CORNERS_INSET_LFRB { 22, 22, 22, 22 } // (mm) Left, Front, Right, Back insets
   #define LEVEL_CORNERS_HEIGHT      0.0   // (mm) Z height of nozzle at leveling points
-  #define LEVEL_CORNERS_Z_HOP       4.0   // (mm) Z height of nozzle between leveling points
+  #define LEVEL_CORNERS_Z_HOP       6.0   // (mm) Z height of nozzle between leveling points
   #define LEVEL_CENTER_TOO              // Move to the center after the last corner
 #endif
 
@@ -2281,7 +2281,7 @@
 #endif
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
+  #define Z_SAFE_HOMING_X_POINT (((X_BED_SIZE) / 2)-15)    // X point for Z homing when homing all axes (G28).
   #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
 #endif
 
@@ -2403,9 +2403,9 @@
 #define PREHEAT_1_TEMP_BED     70
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
-#define PREHEAT_2_LABEL       "ABS"
+#define PREHEAT_2_LABEL       "PETG"
 #define PREHEAT_2_TEMP_HOTEND 240
-#define PREHEAT_2_TEMP_BED    110
+#define PREHEAT_2_TEMP_BED     60
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 /**
