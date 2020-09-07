@@ -83,13 +83,13 @@
    Leave all disabled if no sensor is available
 */
 //#define ABL_EZABL // TH3D EZABL or Any NO Sensor
-#define ABL_NCSW //Creality ABL or Any NC Sensor
-//#define ABL_BLTOUCH
+//#define ABL_NCSW //Creality ABL or Any NC Sensor
+#define ABL_BLTOUCH
 //#define ABL_TOUCH_MI // Uncomment ABL_TOUCH_MI to use Touch-MI sensor by hotends.fr
 
-#define CREALITY_ABL_MOUNT //Using creality ABL mount
+//#define CREALITY_ABL_MOUNT //Using creality ABL mount
 //#define E3D_DUALFAN_MOUNT // Using HD Modular mount as above with 2 5015 blowers and sensor on the right
-//define E3D_PROBEMOUNT_LEFT // Default is probe mounted to the right for E3D. Set this to invert.
+#define E3D_PROBEMOUNT_LEFT // Default is probe mounted to the right for E3D. Set this to invert.
 
 
 /**
@@ -125,7 +125,7 @@
    If a probe is enabled and nothing selected here, defaults to Bilinear
 */
 //#define ABL_BI
-//#define ABL_UBL
+#define ABL_UBL
 
 /*
    For melzi boards these options allow you to cusomize what you want to do.
@@ -1636,7 +1636,7 @@
       #define NOZZLE_TO_PROBE_OFFSET { 63, 5, 0 }
     #endif
   #else
-    #define NOZZLE_TO_PROBE_OFFSET { -20, 0, 0.2 }
+    #define NOZZLE_TO_PROBE_OFFSET { -20, 0, 0 }
   #endif
 #endif
 
