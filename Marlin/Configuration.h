@@ -1304,10 +1304,12 @@
   #define EStepsmm 409
 #elif ANY(EZRstruder, MachineCR10SV2)
   #define EStepsmm 93
-#elif ANY(MachineCR10SPro, MachineCR10Max, MachineCRXPro)
+#elif ANY(MachineCR10Max, MachineCRXPro)
   #define EStepsmm 140
 #elif ENABLED(MachineCR2020)
   #define EStepsmm 113
+#elif ENABLED(MachineCR10SPro)
+  #define EStepsmm 136.85
 #else
   #define EStepsmm 95
 #endif
